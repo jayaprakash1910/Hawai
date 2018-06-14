@@ -1,0 +1,10 @@
+logs/**
+Results/**
+.settings/**
+target/**
+test-output/**
+*.class
+src/main/java/org/comcast/MobileWiFi/testData/config.properties
+*.DS_Store
+
+/target/
