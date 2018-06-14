@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class ArrayUtilsHelper {
+public class ArrayUtils {
 
 	public static ArrayList<String> convertMapToArrayList(Map<String, String> map) {
 		ArrayList<String> arrayList = new ArrayList<String>();

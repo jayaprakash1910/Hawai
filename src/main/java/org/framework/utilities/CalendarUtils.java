@@ -14,8 +14,8 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 import org.framework.Base;
 
-public class CalendarHelper extends Base {
-	private static Logger Log4j = Logger.getLogger(CalendarHelper.class.getName());
+public class CalendarUtils extends Base {
+	private static Logger Log4j = Logger.getLogger(CalendarUtils.class.getName());
 
 	public static String getDateFormat() {
 		String currentDate = null;

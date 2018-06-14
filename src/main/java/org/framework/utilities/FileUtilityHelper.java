@@ -609,7 +609,7 @@ public class FileUtilityHelper extends Base {
 	}
 	
 	public static String getImageTimeStamp() {
-		return CalendarHelper.getCurrentTime().replace(":", "_").replace(".", "_"); 
+		return CalendarUtils.getCurrentTime().replace(":", "_").replace(".", "_"); 
 	}
 	
 	public static File[] sortFilesInDescendingOrder(String path) throws Exception {
@@ -992,56 +992,6 @@ public class FileUtilityHelper extends Base {
         }
     }
 	 
-	 public static void deleteImageProcessingFolder() throws Throwable {
-		String directoryToDelete = tempTestcaseImagesPath + "ImageProcessing";
-		Thread.sleep(2000);
-		if(FileUtilityHelper.deleteDirFromCMDPrompt(directoryToDelete)) {
-			Log.info("The temporary directory '" + directoryToDelete + "' is successfully deleted after executing all the testcases");
-		}
-	 }
-	 
-	/* public static void convertWordDocToPDF(String docPath, String pdfPath) {
-		 try {
-	            FileInputStream doc = new FileInputStream(new File(docPath));
-	            XWPFDocument document = new XWPFDocument(doc);
-	            String k = null;
-	            XWPFWordExtractor we = new XWPFWordExtractor(document);
-	            k = we.getText();
-
-	            PdfOptions options = PdfOptions.create();
-	            OutputStream out = new FileOutputStream(new File(pdfPath));
-	            PdfConverter.getInstance().convert(document, out, options);
-	            doc.close();
-	            out.close();
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-	            Log.info(e.getMessage());
-	        }
-		}*/
-		
-	public static void convertWordDocToHTML(String docPath) {
-		String osName = System.getProperty("os.name");
-		File file =  new File(docPath);
-		try {
-			if (osName.contains("Windows")) {
-				if (file.exists()) {
-					Process p = Runtime.getRuntime().exec(new String[]{"" + docPath});
-					Thread.sleep(1000);
-			        StringBuilder sb = new StringBuilder();
-			        BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-			        String line; 
-			        while((line = reader.readLine()) != null) { 
-			        	sb = sb.append(line).append("\n");
-			        } 
-				}
-			}
-			
-		} catch (Exception e) {
-        	e.printStackTrace();
-            Log.info(e.getMessage());
-        }
-	}
-	
 	public static void copyFolder(File src, File dest) throws IOException {
     	if(src.isDirectory()){
     		//if directory not exists, create it
@@ -1223,7 +1173,6 @@ public class FileUtilityHelper extends Base {
 		
 		return null;
 	} 
-	 
 	
 	 public static void generateJenkinsReport() throws Exception {
         File file = FileUtilityHelper.getLatestFile(System.getProperty("user.dir") + File.separator + "Results" + File.separator);
@@ -1242,8 +1191,6 @@ public class FileUtilityHelper extends Base {
         FileUtilityHelper.copyFileContentsToNewFile(oldFileName, newFilePath);
         copyFolderContents(file.toString(), System.getProperty("user.dir") + File.separator + "JenkinsReport" + File.separator);
     } 
-	 
-	 
 	 
 	public static void copyJenkinsReportToDesktopResultOnlyJobLocation() throws Exception {
 		
@@ -1358,6 +1305,68 @@ public class FileUtilityHelper extends Base {
 			Log4j.info(e.getMessage());
 		}
 		return result;
+	}
+	
+	public static String filePath() {
+		String strDirectoy = "ResultFile";
+		String screenshotPath = System.getProperty("user.dir") + File.separator + "Results" + File.separator;
+		new File(screenshotPath + strDirectoy + "_" + timeStamp).mkdirs();
+		return screenshotPath + strDirectoy + "_" + timeStamp + File.separator;
+	}
+	
+	public static void deleteImageProcessingFolder() throws Throwable {
+		String directory = "ImageProcessing";
+		File file = new File (tempTestcaseImagesPath + directory + File.separator);
+		
+		if (EnvironmentUtils.isWindows()) {
+			if(file.exists()){
+				FileUtilityHelper.deleteDirFromCMDPrompt(tempTestcaseImagesPath + directory + File.separator);
+			}
+		} else if (EnvironmentUtils.isMAC()) {
+			if (file.exists()) {
+				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
+			}
+			
+		} else if (file.exists()) {
+			FileUtilityHelper.deleteDir(tempTestcaseImagesPath + directory + File.separator);
+		}
+	}
+	
+	public static void deleteJenkinsReportFolder() throws Throwable {
+		String jenkinsReportPath = System.getProperty("user.dir") + File.separator + "JenkinsReport" + File.separator;
+		File file = new File (jenkinsReportPath);
+		
+		if (EnvironmentUtils.isWindows()) {
+			if(file.exists()){
+				FileUtilityHelper.deleteDirFromCMDPrompt(jenkinsReportPath);
+			}
+		} else if (EnvironmentUtils.isMAC()) {
+			if (file.exists()) {
+				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
+			}
+			
+		} else if (file.exists()) {
+			FileUtilityHelper.deleteDir(jenkinsReportPath);
+		}
+	}
+	
+	public static void deleteFailedTestsScreenshotsFolder() throws Throwable {
+		String directory = "FailedTestsScreenshots";
+		String failedTestCaseScreenshotPath = System.getProperty("user.dir") + File.separator + "FailedTestsScreenshots" + File.separator;
+		File file = new File(failedTestCaseScreenshotPath);
+		
+		if (EnvironmentUtils.isWindows()) {
+			if(file.exists()){
+				FileUtilityHelper.deleteDirFromCMDPrompt(failedTestCaseScreenshotPath);
+			}
+		} else if (EnvironmentUtils.isMAC()) {
+			if (file.exists()) {
+				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
+			}
+			
+		} else if (file.exists()) {
+			FileUtilityHelper.deleteDir(failedTestCaseScreenshotPath + directory + File.separator);
+		}
 	}
 	
 }

@@ -4,7 +4,7 @@ package org.framework.reports;
 import java.util.Map;
 
 import org.framework.Base;
-import org.framework.utilities.ScreenshotUtilsHelper;
+import org.framework.utilities.ScreenshotUtils;
 import org.testng.asserts.IAssert;
 import org.testng.asserts.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
@@ -29,7 +29,7 @@ public class CustomAssertion extends SoftAssert {
 		try {
 			Base.logger.log(LogStatus.FAIL, failMessage);
 			Base.Log4j.info(failMessage);
-			Base.logger.log(LogStatus.INFO, Base.logger.addScreenCapture(ScreenshotUtilsHelper.getScreenshot()));
+			Base.logger.log(LogStatus.INFO, Base.logger.addScreenCapture(ScreenshotUtils.getScreenshot()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

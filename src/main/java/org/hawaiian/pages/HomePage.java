@@ -2,7 +2,7 @@ package org.hawaiian.pages;
 
 import java.lang.invoke.MethodHandles;
 
-import org.framework.utilities.BrowserHelper;
+import org.framework.utilities.BrowserUtils;
 import org.framework.utilities.PropertiesHelper;
 import org.framework.webobjects.WebObjects;
 
@@ -13,7 +13,7 @@ public class HomePage extends BasePage {
 	
 	public static boolean isCheckInButtonVisible() {
 		logHelper.info("Checking Check in button visible");
-		BrowserHelper.waitForPageLoad(5);
+		BrowserUtils.waitForPageLoad(5);
 		return WebObjects.isVisible(checkinButton);
 	}
 	

@@ -2,7 +2,7 @@ package org.framework.reports;
 
 import org.apache.log4j.Logger;
 import org.framework.Base;
-import org.framework.utilities.ScreenshotUtilsHelper;
+import org.framework.utilities.ScreenshotUtils;
 import org.testng.ITestResult;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -31,7 +31,7 @@ public class LoggerHelper extends Base {
 		if (throwableErrorData.contains("An unknown server-side error occurred") ||
 				throwableErrorData.contains("java.lang.NullPointerException") || 
 				throwableErrorData.toLowerCase().contains("exception")) {
-			logger.log(LogStatus.INFO, logger.addScreenCapture(ScreenshotUtilsHelper.getScreenshot()));
+			logger.log(LogStatus.INFO, logger.addScreenCapture(ScreenshotUtils.getScreenshot()));
 		}
 		logger.log(LogStatus.FAIL, "Test Case Failed: " + failedTestCaseName);
 	}
@@ -53,6 +53,6 @@ public class LoggerHelper extends Base {
 	
 	public static void printFailMessage() throws Exception {
 		Base.logger.log(LogStatus.FAIL, HardAssertion.flMessage);
-		logger.log(LogStatus.INFO, logger.addScreenCapture(ScreenshotUtilsHelper.getScreenshot()));
+		logger.log(LogStatus.INFO, logger.addScreenCapture(ScreenshotUtils.getScreenshot()));
 	}
 }

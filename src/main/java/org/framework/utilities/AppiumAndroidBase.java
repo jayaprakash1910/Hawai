@@ -30,7 +30,7 @@ public class AppiumAndroidBase extends Base {
 			driver.manage().deleteAllCookies();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			new WebDriverWait(driver, 10);
-			BrowserHelper.openBrowser();
+			BrowserUtils.openBrowser();
 		} catch (Exception e) {
 			Log4j.info("Error performing Appium test: " + e.getMessage());
 			takeScreenshots();

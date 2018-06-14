@@ -14,7 +14,7 @@ import org.framework.Base;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
-public class StringUtilsHelper extends Base {
+public class StringUtils extends Base {
 
 	public static String getRandomPublicURL() {
 			ArrayList<String> websites = new ArrayList<String>();

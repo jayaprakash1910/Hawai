@@ -24,8 +24,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BrowserHelper extends Base {
-	private static Logger Log = Logger.getLogger(BrowserHelper.class.getName());
+public class BrowserUtils extends Base {
+	private static Logger Log = Logger.getLogger(BrowserUtils.class.getName());
 	public static String currentClassName = MethodHandles.lookup().lookupClass().getSimpleName();
 	//protected static AppiumDriver<MobileElement> driver;
 	
@@ -56,6 +56,16 @@ public class BrowserHelper extends Base {
 		return browser;
 	}
 	
+	public static String getBrowserName() {
+		if (deviceType.contains("iOS")) {
+			return "Safari";
+		} else if (deviceType.equalsIgnoreCase("Android")) {
+			return "Chrome";
+		} else {
+			return PropertiesHelper.readProperties("BrowserName");
+		}
+	}
+	
 	public static void closeBrowser() throws Throwable{
 		try {
 			if (!driver.toString().isEmpty()){
@@ -81,7 +91,7 @@ public class BrowserHelper extends Base {
 	public static String getRandomURL() throws Throwable {
 		String url = null;
 		try {
-			url = StringUtilsHelper.getRandomPublicURL();
+			url = StringUtils.getRandomPublicURL();
 		//	logHelper.info("Public URL launched is: '" + url + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -243,9 +253,9 @@ public class BrowserHelper extends Base {
 			driver.get(appURL);
 			Thread.sleep(500);
 		} else {
-			driver.get(BrowserHelper.getRandomURL());
+			driver.get(BrowserUtils.getRandomURL());
 			System.out.println("Driver name is - " + driver.getSessionId());
-			if (!(BrowserHelper.getURLStatus(BrowserHelper.getCurrentURL()) == 200)) {
+			if (!(BrowserUtils.getURLStatus(BrowserUtils.getCurrentURL()) == 200)) {
 				System.out.println("Browser title - " + driver.getTitle());
 				logHelper.info("Failed to launch the " + "'" + browserName + "' browser!! ");
 				relaunchRandomURL("");
@@ -258,7 +268,7 @@ public class BrowserHelper extends Base {
 		if (!appURL.isEmpty()) {
 			driver.get(appURL);
 		} else {
-		driver.get(BrowserHelper.getRandomURL());
+		driver.get(BrowserUtils.getRandomURL());
 		}
 		
 		takeScreenshots();

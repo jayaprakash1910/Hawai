@@ -22,7 +22,7 @@ import org.framework.Base;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-public class ScreenshotUtilsHelper extends Base {
+public class ScreenshotUtils extends Base {
 	//protected static AppiumDriver<MobileElement> driver;	
 	/****************************************************************************************************************************
 	 * Function Name : get_ScreenShot() Description : Capture Screenshot
@@ -37,7 +37,7 @@ public class ScreenshotUtilsHelper extends Base {
 		try {
 				FileUtils.moveToDirectory(scrFile, new File(fileName), false);
 				File newFile = new File( fileName + File.separator + source);
-				screenshotDestinationPath = fileName + File.separator + Base.currentTestMethodName + "_" + CalendarHelper.getLocalDateTime().replace(" ", "_").replace(":", "_").replace("/", "_") + ".png";
+				screenshotDestinationPath = fileName + File.separator + Base.currentTestMethodName + "_" + CalendarUtils.getLocalDateTime().replace(" ", "_").replace(":", "_").replace("/", "_") + ".png";
 				new File(newFile.toString()).renameTo((new File(screenshotDestinationPath)));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class ScreenshotUtilsHelper extends Base {
 	}
 	
 	public static String getScreenshot() throws Exception {
-		String dateName = CalendarHelper.getCurrentTime().replace(" ", "_").replace(":", "_").replace("/", "_");
+		String dateName = CalendarUtils.getCurrentTime().replace(" ", "_").replace(":", "_").replace("/", "_");
 		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		
 		//String failedTestCaseScreenshotPath = FileUtilityHelper.getLatestDirectory(screenshotPath).toString() + File.separator + "FailedTestsScreenshots" + File.separator;
@@ -123,8 +123,7 @@ public class ScreenshotUtilsHelper extends Base {
 		String docFilePath = FileUtilityHelper.getTestcaseScreenshotsPath() + "TestResultsWithScreenshots.docx" ;
 		FileUtilityHelper.moveFilesWithDirectory(FileUtilityHelper.getTestcaseImageFilesPath());
 		FileUtilityHelper.copyImagesToWordDoc(FileUtilityHelper.getTestcaseImageFilesPath(), docFilePath);
-		
-		deleteImageProcessingFolder();
+		FileUtilityHelper.deleteImageProcessingFolder();
 	}
 	
 	/**

@@ -1,32 +1,25 @@
 package org.framework;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.framework.reports.Accessories;
 import org.framework.reports.CustomAssertion;
 import org.framework.reports.HardAssertion;
 import org.framework.reports.LoggerHelper;
-import org.framework.utilities.BrowserHelper;
+import org.framework.utilities.BrowserUtils;
 import org.framework.utilities.DeviceDetails;
-import org.framework.utilities.DriverUtils;
-import org.framework.utilities.ExcelUtils;
+import org.framework.utilities.EnvironmentUtils;
 import org.framework.utilities.FileUtilityHelper;
-import org.framework.utilities.PhysicalDeviceDetails;
-import org.framework.utilities.PropertiesHelper;
-import org.framework.utilities.ScreenshotUtilsHelper;
-import org.framework.utilities.StringUtilsHelper;
+import org.framework.utilities.ScreenshotUtils;
+import org.framework.utilities.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -79,11 +72,11 @@ public class Base {
 			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
 			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "DeleteFolder.bat";
 	public static String executeType = null;
-	public static String deviceType = getExecutionDeviceType();
-	public static String browserName = getBrowserName();
-	public static String environmentName = getEnvironmentName();
-	public static String deviceName = getDeviceName();
-	public static String deviceConnectHost = getRemoteIp();
+	public static String deviceType = EnvironmentUtils.getExecutionDeviceType();
+	public static String browserName = BrowserUtils.getBrowserName();
+	public static String environmentName = EnvironmentUtils.getEnvironmentName();
+	public static String deviceName = EnvironmentUtils.getDeviceName();
+	public static String deviceConnectHost = EnvironmentUtils.getRemoteIp();
 	public static String testCaseName;
 	public static String serviceUrl = "http://" + deviceConnectHost + ":4723/wd/hub";
 	public static String addRegistryFilePath = System.getProperty("user.dir") + File.separator + "src"
@@ -123,26 +116,11 @@ public class Base {
 		System.setProperty("current.date.time", dateFormat.format(new Date()));
 	}
 	
-	public static String getDeviceType() throws Throwable {
-		return deviceType;
-	}
-	
-	public static String getPageLocatorPath() throws Throwable {
-		return System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator + "comcast" + File.separator + "MobileWiFi" +  File.separator + "pageLocator" + File.separator ;
-	}
-	
-	public static boolean isVirtualDevice() {
-		if (System.getProperty("virtualdevice") != null) {
-			return System.getProperty("virtualdevice").equalsIgnoreCase("yes");
-		} 
-		return PropertiesHelper.readProperties("virtualdevice").equalsIgnoreCase("yes");
-	}
-	
 	@BeforeSuite (alwaysRun = true)
 	public static void startReport() throws Throwable {
 		initiateLog4jConfigurator();
-		deleteImageProcessingFolder();
-		deleteJenkinsReportFolder();
+		FileUtilityHelper.deleteImageProcessingFolder();
+		FileUtilityHelper.deleteJenkinsReportFolder();
 		generateInitialExtentReport();
 	}
 	
@@ -160,10 +138,10 @@ public class Base {
 	@AfterMethod (alwaysRun = true)
 	public void getResult(ITestResult result) {
 		try {
-			StringUtilsHelper.getCurrentTestMethodName(result);
+			StringUtils.getCurrentTestMethodName(result);
 			LoggerHelper.setTestResultStatus(result);
 			Log4j.info("Test Case '" + testCaseName + "' execution status: '" + getTestResultStatus(result) + "'");
-			BrowserHelper.quitBrowser();
+			BrowserUtils.quitBrowser();
 		} catch (Throwable e) {
 			Log4j.info(e.getMessage());
 		}
@@ -173,76 +151,9 @@ public class Base {
 	public void endReport() throws Throwable {
         extent.flush();
         extent.close();
-        captivePortalReportClosureActivities();
+        testReportClosureActivities();
     }
-	
-	public static void instantiateDriver() throws Throwable {
-		DriverUtils.getDriver(deviceType);
-	}
-	
-	public static boolean isNative() {
-		if (System.getProperty("native") != null) {
-			return System.getProperty("native").equalsIgnoreCase("yes");
-		}
-		return PropertiesHelper.readProperties("native").equalsIgnoreCase("yes");
-	}
-	
-	public static String getBrowserName() {
-		if (deviceType.contains("iOS")) {
-			return "Safari";
-		} else if (deviceType.equalsIgnoreCase("Android")) {
-			return "Chrome";
-		} else {
-			return PropertiesHelper.readProperties("BrowserName");
-		}
-	}
-	
-	public static String getExecutionDeviceType() {
-		if (System.getProperty("deviceType") != null) {
-			String deviceType = System.getProperty("deviceType");
-			executeType = "maven";
-			if (deviceType.contains("iOS")) {
-				return "iOS";
-			} else if (deviceType.contains("Android")) {
-				return "Android";
-			} else if (deviceType.contains("Desktop")) {
-				return "Desktop";
-			} 
-		} else {
-			executeType = "local";
-		}
-		return PropertiesHelper.readProperties("DeviceType");
-	}
-	
-	public static String getEnvironmentName() {
-		if (System.getProperty("environment") != null) {
-			return System.getProperty("environment");
-		} else {
-			return PropertiesHelper.readProperties("Environment");
-		}
-	}
-	
-	public static String getDeviceName() {
-		try {
-			if (System.getProperty("deviceName") != null) {
-				return System.getProperty("deviceName");
-			} else if (deviceType.equalsIgnoreCase("Desktop")) {
-					return PhysicalDeviceDetails.getDesktopDeviceName();
-				}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log4j.info(e.getMessage());
-		}
-		return PropertiesHelper.readProperties("DeviceName");
-	}
-	
-	public static String getRemoteIp() {
-		if (System.getProperty("remoteIp") != null) {
-			return System.getProperty("remoteIp");
-		}
-		return PropertiesHelper.readProperties("RemoteIP");
-	}
-	
+
 	public String getTestResultStatus(ITestResult result) {
 		if (result.getStatus() == 2) {
 			return "FAIL";
@@ -272,107 +183,33 @@ public class Base {
         .addSystemInfo("Device Name", deviceName);
 	}
 		
-	public void captivePortalReportClosureActivities() throws Throwable {
+	public void testReportClosureActivities() throws Throwable {
         FileUtilityHelper.replaceHTMLContent("", DeviceDetails.getOSVersion());
         FileUtilityHelper.replaceContent();
         FileUtilityHelper.replacePassPercentagePosition();
         FileUtilityHelper.replacePassFailPercent();
-        ScreenshotUtilsHelper.copyImagesToWord();
+        ScreenshotUtils.copyImagesToWord();
         FileUtilityHelper.generateJenkinsReport();
    	}
 	
 	public static void initiateLog4jConfigurator() {
 		DOMConfigurator.configure("log4j.xml");
 	}
-
-	public static String filePath() {
-		String strDirectoy = "ResultFile";
-		String screenshotPath = System.getProperty("user.dir") + File.separator + "Results" + File.separator;
-		new File(screenshotPath + strDirectoy + "_" + timeStamp).mkdirs();
-		return screenshotPath + strDirectoy + "_" + timeStamp + File.separator;
-	}
 	
 	public static String createNewHTMLReport() throws Exception {
-		File file = new File(Base.filePath() + "Results_" + Base.timeStampBeforeSuite + ".html");// "Results.html"
+		File file = new File(FileUtilityHelper.filePath() + "Results_" + Base.timeStampBeforeSuite + ".html");// "Results.html"
 		file.createNewFile();
 		return file.toString();
 	}
 	
 	public static void takeScreenshots() throws Throwable {
-		BrowserHelper.waitForPageLoad(10);
+		BrowserUtils.waitForPageLoad(10);
 		if (!deviceType.equalsIgnoreCase("Desktop")) {
-			ScreenshotUtilsHelper.captureScreenshot();
+			ScreenshotUtils.captureScreenshot();
 		} else if (deviceType.equalsIgnoreCase("Desktop")) {
-			ScreenshotUtilsHelper.captureDesktopScreenshot(FileUtilityHelper.getTestcaseImagesPath() + File.separator + "pic" + "_" + FileUtilityHelper.getImageTimeStamp() +".png");
+			ScreenshotUtils.captureDesktopScreenshot(FileUtilityHelper.getTestcaseImagesPath() + File.separator + "pic" + "_" + FileUtilityHelper.getImageTimeStamp() +".png");
 		}
 		Thread.sleep(1000);
-	}
-	
-	public static void deleteImageProcessingFolder() throws Throwable {
-		String directory = "ImageProcessing";
-		File file = new File (tempTestcaseImagesPath + directory + File.separator);
-		
-		if (isWindows()) {
-			if(file.exists()){
-				FileUtilityHelper.deleteDirFromCMDPrompt(tempTestcaseImagesPath + directory + File.separator);
-			}
-		} else if (isMAC()) {
-			if (file.exists()) {
-				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
-			}
-			
-		} else if (file.exists()) {
-			FileUtilityHelper.deleteDir(tempTestcaseImagesPath + directory + File.separator);
-		}
-	}
-	
-	public static void deleteJenkinsReportFolder() throws Throwable {
-		String jenkinsReportPath = System.getProperty("user.dir") + File.separator + "JenkinsReport" + File.separator;
-		File file = new File (jenkinsReportPath);
-		
-		if (isWindows()) {
-			if(file.exists()){
-				FileUtilityHelper.deleteDirFromCMDPrompt(jenkinsReportPath);
-			}
-		} else if (isMAC()) {
-			if (file.exists()) {
-				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
-			}
-			
-		} else if (file.exists()) {
-			FileUtilityHelper.deleteDir(jenkinsReportPath);
-		}
-	}
-	
-	public static void deleteFailedTestsScreenshotsFolder() throws Throwable {
-		String directory = "FailedTestsScreenshots";
-		String failedTestCaseScreenshotPath = System.getProperty("user.dir") + File.separator + "FailedTestsScreenshots" + File.separator;
-		File file = new File(failedTestCaseScreenshotPath);
-		
-		if (isWindows()) {
-			if(file.exists()){
-				FileUtilityHelper.deleteDirFromCMDPrompt(failedTestCaseScreenshotPath);
-			}
-		} else if (isMAC()) {
-			if (file.exists()) {
-				Runtime.getRuntime().exec("rm -R " + file.getAbsolutePath());
-			}
-			
-		} else if (file.exists()) {
-			FileUtilityHelper.deleteDir(failedTestCaseScreenshotPath + directory + File.separator);
-		}
-	}
-	
-	public static String generateSheetName() throws Throwable {
-		String environment = PropertiesHelper.readProperties("Environment");
-		if (environment.equalsIgnoreCase("QA")) {
-			return "AP_Setup_QA";
-		} else if (environment.equalsIgnoreCase("STAGE")) {
-			return "AP_Setup_STAGE";
-		} else if (environment.equalsIgnoreCase("PROD")) {
-			return "AP_Setup_PROD";
-		}
-		return null;
 	}
 	
 	@SuppressWarnings("unused")
@@ -402,44 +239,6 @@ public class Base {
   		return failureCounter == 0;
   	}
 	
-	public static ArrayList<String> getExcelTestNamesToExecute(String sheetName) throws Throwable {
-		String filePath = Base.Path_TestData;
-
-		FileInputStream excelFile = new FileInputStream(filePath + "CaptivePortal_TestCases.xlsx");
-		ArrayList<String> testsFromExcel = new ArrayList<String>();
-
-		// Access the required test data sheet
-		ExcelWBook = new XSSFWorkbook(excelFile);
-		ExcelWSheet = ExcelWBook.getSheet(sheetName);
-
-		int rowNum = ExcelWSheet.getPhysicalNumberOfRows();
-		int colIndex = 2;
-		String cellValue, testCaseName;
-
-		for (int rowIndex = 1; rowIndex < rowNum; rowIndex++) {
-			Row row = CellUtil.getRow(rowIndex, ExcelWSheet);
-			cellValue = ExcelUtils.getCellValue(row, colIndex).trim();
-
-			if (cellValue.equalsIgnoreCase("Yes")) {
-				// Add the test case name to the array list
-				testCaseName = ExcelUtils.getCellValue(row, 1);
-
-				testsFromExcel.add(testCaseName);
-			}
-		}
-		return testsFromExcel;
-	}
-	
-	public static void startAppiumServer() {
-		AppiumDriverLocalService service = AppiumDriverLocalService.buildDefaultService();
-		service.start();
-	}
-	
-	public static void stopAppiumServer() {
-		AppiumDriverLocalService service = AppiumDriverLocalService.buildDefaultService();
-		service.stop();
-	}
-
 	public static double getPassPercent() {
 		double passPercent = (passCounter/(passCounter + failCounter) * 100);
 		return (double) Math.round(passPercent * 100) / 100;
@@ -450,28 +249,4 @@ public class Base {
 		return (double) Math.round(passPercent * 100) / 100;
 	}
 	
-	//this is required only when you run with two jobs.. with new static ip implementation this is not required anymore. We are not using this method now.
-	public static void startDesktopJenkinsSlave() {
-		
-		try { 
-			if (isWindows()) {
-				Log4j.info("Continuing to restart Jenkins Slave");
-				Runtime.getRuntime().exec(startDesktopJenkinsBatFilePath);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log4j.info(e.getMessage());
-			Log4j.info("Failed to start jenkins slave...");
-		}
-	}
-	
-	public static boolean isWindows() throws Exception {
-		osName = DeviceDetails.getOSName();
-		return osName.toLowerCase().contains("windows");
-	}
-	
-	public static boolean isMAC() throws Exception {
-		osName = DeviceDetails.getOSName();
-		return osName.toLowerCase().contains("mac");
-	}
 }

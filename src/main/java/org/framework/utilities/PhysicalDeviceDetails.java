@@ -17,6 +17,7 @@ public class PhysicalDeviceDetails extends Base {
 			//Samsung Edge S7
 			case "Nexus6":
 				udid = "emulator-5554";
+				mobileMacId = "TBD";
 	            break;
 	            
 			case "JP":
@@ -29,76 +30,11 @@ public class PhysicalDeviceDetails extends Base {
 				mobileMacId = "1c:56:fe:bb:90:0e";
 				break;
 				
-			//Samsung Galaxy S7
-			case "Android07":
-				udid = "ce0416041a1bcb2302";
-				mobileMacId = "ac:5f:3e:ea:e4:68";
-				break;	
-				
-			//Google Nexus 6P
-			case "Android08":
-				udid = "01822a3d1b6a9db5";
-				mobileMacId = "00:34:da:8d:57:f5";
-				break;
-				
-			//Google Nexus 5x
-			case "Android09":
-				udid = "84B7N16128001516";
-				mobileMacId = "1c:67:58:49:3e:fc";
-				break;
-
-			//Google Pixel
-			case "Android10":
-				udid = "FA71J0302902";
-				mobileMacId = "ac:37:43:a8:4c:4c";
-				break;
-				
 			case "Android12":
 				udid = "988838304a4e5a4e39";
 				mobileMacId = "dc:ef:ca:ff:7c:6a";
 				break;
 				
-			//Samsung S7 Edge
-			case "Android13":
-				udid = "ce01171163976e0b05";
-				mobileMacId = "b0:72:bf:4e:7f:9b";
-				break;
-				
-			//Samsung Galaxy Tab (old)
-			case "ATab04":
-				udid = "3200178da7c5a000";
-				mobileMacId = "b0:df:3a:0c:8e:c0";
-				break;
-				
-			//Asus GenPad 8.0
-			case "ATab05":
-				udid = "G9NPCX081937296";
-				mobileMacId = "70:8b:cd:96:33:f9";
-				break;
-				
-			//Samsung Galaxy Tab (new)
-			case "ATab06":
-				udid = "6b7c19281d93da8b";
-				mobileMacId = "a8:81:95:4e:9a:c8";
-				break;
-				
-			//Asus GenPad 8.0
-			case "ATab07":
-				udid = "G9NPCX082008Z6K";
-				mobileMacId = "70:8b:cd:96:34:87";
-				break;
-			
-			//Kindle Fire Tab
-			case "ATab08":
-				udid  = "G0W0H40465330SHC";
-				mobileMacId = "68:37:e9:f0:90:1d";
-				break;
-
-			//Samsung Galaxy Tab A
-			case "ATab09":
-				udid = "79defef05f6da3a6";
-				mobileMacId = "a4:6c:f1:dd:43:37";
-				break;
 			//iPhone v7
 			case "iPhone01":
 				udid = "d4f096bd2e3adac528e7074deac42ec761d0c260";
@@ -110,147 +46,8 @@ public class PhysicalDeviceDetails extends Base {
 				udid = "13a05502f35fa938f06e289136a3034932e0ea95";
 				mobileMacId = "00:db:70:a5:39:dd";
 				break;
-				
-			case "iPhone04":
-				udid = "F19MWFLBFF9R";
-				mobileMacId = "TBD";
-				break;
-				
-			//iPhone v8
-			case "iPhone05":
-				udid = "0cc85b01b9cb7ae7d1e96e65508299ab2307c24a";
-				mobileMacId = "6c:4d:73:b9:82:58";
-				break;
-			
-			case "iPadAir":
-				udid = "2c71591fca7ab648f9e8726fdacb43c9f1185b08";
-				mobileMacId = "98:01:a7:3d:32:81";
-				break;
-				
-			case "iPad01":
-				udid = "7ca71775a2d010273774e6e3ca5dc2a866a57a75";
-				mobileMacId = "c8:f6:50:e6:d2:a7";
-				break;
-				
 			}
 		return udid;
-	}
-	
-	public static String getDeviceMACAddress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public static String getDeviceUDID() throws Throwable {
-		String osName = System.getProperty("os.name");
-		String udidValue = null;
-		try { 
-			if (osName.contains("Windows")) {
-				Process p = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "adb devices"});
-				StringBuilder sb = new StringBuilder();
-		        
-		        BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-		        String line, st = null; 
-		        while((line = reader.readLine()) != null) { 
-		        	sb = sb.append(line).append("\n");
-		        	st = sb.toString();
-		        } 
-		        String[] str = st.split("\n");
-		        String[] udid = null;
-		        for(int i = 0; i < str.length; i++) {
-		        	if(str.length > 1) {
-		        		udid = str[1].split("device");
-		        	}
-		    	}
-		        
-		        for (int j = 0; j < udid.length; j++) {
-        			if(udid[j].trim() != "" || udid[j].trim() != null) {
-        				udidValue = udid[j].trim();
-        				break;
-        			}
-        		}
-			} else if (osName.contains("Mac")) {
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return udidValue;
-	}
-	
-	@SuppressWarnings("unused")
-	public static String getAndroidWiFiMACAddress() throws Throwable {
-		String osName = System.getProperty("os.name");
-		String udidValue = getDeviceUDID();
-		String wifiMACAddress = null;
-		
-		try { 
-			if (osName.contains("Windows")) {
-				Process p = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "adb -s " + udidValue + " shell ip addr show wlan0"});
-				StringBuilder sb = new StringBuilder();
-		        
-		        BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-		        String line, st = null; 
-		        while((line = reader.readLine()) != null) { 
-		        	sb = sb.append(line).append("\n");
-		        	st = sb.toString();
-		        } 
-		        String[] str = st.split("\n");
-		        String[] macAddress = null;
-		        for(int i = 0; i < str.length; i++) {
-		        	if(str[i].contains("ether")) {
-		        		macAddress = str[i].split("ether");
-		        		break;
-		        	}
-		    	}
-		        
-		        for (int j = 0; j < macAddress.length; j++) {
-        			if ((macAddress[j].trim() != "" || macAddress[j].trim() != null) && (macAddress[j].length() > 0)) {
-        				if(macAddress[j].trim().contains("ff:ff:ff:ff:ff:ff")) {
-        					wifiMACAddress = macAddress[j].trim().substring(0, Math.min(macAddress[j].trim().length(), 17));
-        				}
-        			}
-        		}
-			} else if (osName.contains("Mac")) {
-				Process p = Runtime.getRuntime().exec(new String[]{"adb -s " + udidValue + " shell ip addr show wlan0  | grep 'link/ether '| cut -d' ' -f6"});
-				StringBuilder sb = new StringBuilder();
-		        
-		        BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-		        String line, st = null; 
-		        while((line = reader.readLine()) != null) { 
-		        	sb = sb.append(line).append("\n");
-		        	st = sb.toString();
-		        } 
-		        String[] str = st.split("\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return wifiMACAddress;
-	}
-	
-	public static String getAndroidSerialNumber() throws Throwable {
-		String osName = System.getProperty("os.name");
-		String udidValue = getDeviceUDID();
-		String serialNumber = null;
-		
-		try { 
-			if (osName.contains("Windows")) {
-				Process p = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "adb -s " + udidValue + " getprop ril.serialnumber"});
-				StringBuilder sb = new StringBuilder();
-		        
-		        BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
-		        String line, st = null; 
-		        while((line = reader.readLine()) != null) { 
-		        	sb = sb.append(line).append("\n");
-		        	st = sb.toString();
-		        } 
-		        serialNumber = st.trim();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return serialNumber;
 	}
 	
 	public static boolean isMobile() {
@@ -443,7 +240,7 @@ public class PhysicalDeviceDetails extends Base {
 	public static String getDesktopSerialNumber() throws Exception {
 		String serial = "";
 		try {
-			if (isWindows()) {
+			if (EnvironmentUtils.isWindows()) {
 				Process process = Runtime.getRuntime().exec(new String[] {"wmic", "bios", "get", "serialnumber"});
 				process.getOutputStream().close();
 				Scanner sc = new Scanner(process.getInputStream());
@@ -452,7 +249,7 @@ public class PhysicalDeviceDetails extends Base {
 				Log4j.info("Windows Desktop " + property + ": " + serial);
 				
 				return serial;
-			} else if (isMAC()) {
+			} else if (EnvironmentUtils.isMAC()) {
 				String st = null;
 				if (osName.contains("Mac")) {
 					String cmd = "system_profiler SPHardwareDataType | awk '/Serial/ {print $4}'";
@@ -515,7 +312,7 @@ public class PhysicalDeviceDetails extends Base {
 		String st = null, str = null;
 		
 		try { 
-			if (isWindows()) {
+			if (EnvironmentUtils.isWindows()) {
 				Process p = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "adb -s " + PhysicalDeviceDetails.getUdid(PhysicalDeviceDetails.deviceName) + " shell getprop ro.build.version.release"});
 				StringBuilder sb = new StringBuilder();
 		        
