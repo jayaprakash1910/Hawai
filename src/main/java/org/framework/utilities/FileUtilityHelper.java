@@ -1163,7 +1163,7 @@ public class FileUtilityHelper extends Base {
 	
 	        for (Iterator iterator = files.iterator(); iterator.hasNext();) {
 	            File file = (File) iterator.next();
-	            if (file.getName().contains(pageClassName)) {
+	            if (file.getName().toLowerCase().contains(pageClassName.toLowerCase())) {
 	            	return file.getAbsolutePath();
 	            }
 	        }

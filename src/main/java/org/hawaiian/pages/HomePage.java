@@ -23,5 +23,4 @@ public class HomePage extends BasePage {
 		Thread.sleep(3000);
 		takeScreenshots();
 	}
-
 }
