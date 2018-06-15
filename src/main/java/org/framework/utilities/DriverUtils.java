@@ -8,7 +8,10 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 public class DriverUtils extends Base {
 	
 	public static RemoteWebDriver getDriver(String driverType) throws Throwable {
-		if (driverType.equalsIgnoreCase("iOS") && !EnvironmentUtils.isVirtualDevice() && !EnvironmentUtils.isNative()) {
+		if (driverType.equalsIgnoreCase("iOS") && EnvironmentUtils.isVirtualDevice() && EnvironmentUtils.isNative()) {
+			Log4j.info("Came in virtual ios");
+			driver = AppiumiOSBase.createVirtualNativeAppiumDriver();
+		} else if (driverType.equalsIgnoreCase("iOS") && !EnvironmentUtils.isVirtualDevice() && EnvironmentUtils.isNative()) {
 			driver = AppiumiOSBase.createRealSafariAppiumDriver();
 		} else if (driverType.equalsIgnoreCase("Android") && !EnvironmentUtils.isVirtualDevice() && !EnvironmentUtils.isNative()) {
 			driver = AppiumAndroidBase.createRealChromeAppiumDriver();

@@ -35,10 +35,10 @@ public class PhysicalDeviceDetails extends Base {
 				mobileMacId = "dc:ef:ca:ff:7c:6a";
 				break;
 				
-			//iPhone v7
-			case "iPhone01":
-				udid = "d4f096bd2e3adac528e7074deac42ec761d0c260";
-				mobileMacId = "78:88:6d:72:e4:cb";
+			//iPhone 7
+			case "iPhone":
+				udid = "118675D2-2171-4F20-A9F4-824F74B6E195";
+				mobileMacId = "TBD";
 				break;
 				
 			//iPhone v7
