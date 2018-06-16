@@ -59,7 +59,9 @@ public class Base {
 	public static String[] uniqueBaseFolderNamesWithExcludeMethodsArray;
 	public static final String Path_TestData = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" 
 			+ File.separator + "resources";
-	public static String androidAppPath = System.getProperty("user.dir") + File.separator + "MOCK.apk";
+	public static String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+	public static String androidAppPath = desktopPath + File.separator + "MOCK.apk";
+	public static String iOSAppPath = desktopPath + File.separator + "HawaiianAirlines.app";
 	public static String configPropertiesPath = Path_TestData + File.separator + "config.properties";
 	public static final String regressionTestSuite = Path_TestData + "CaptivePortal_TestCases.xlsx";
 	public static String currentTestMethodName;

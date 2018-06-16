@@ -49,7 +49,7 @@ public class AppiumiOSBase extends Base {
 	public static RemoteWebDriver createVirtualNativeAppiumDriver() throws Throwable {
 
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability(MobileCapabilityType.APP, "/Users/jgadel200/Documents/workspace/HawaiianAirlines.app");
+		capabilities.setCapability(MobileCapabilityType.APP, iOSAppPath);
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, iOSPlatformVersion);
 		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
