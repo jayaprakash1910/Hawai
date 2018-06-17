@@ -10,6 +10,11 @@ public class HomePageTest extends HomePage {
 	@Test(groups = { "Nexus" })
     public void verifyCheckinPageOnNexus() throws Throwable {
 		logHelper.info("Launching the Hawaiian native app in Nexus Phone");
+		logHelper.info("device type " + System.getProperty("deviceType"));
+		logHelper.info("device name " + System.getProperty("deviceName"));
+		logHelper.info("native" + System.getProperty("native"));
+		logHelper.info("virtual " + System.getProperty("virtualdevice"));
+		
 		hAssert.assertTrue(BasePage.isHawaiianNativeAppOpened(), "Home page did not open", "Home page opened successfully");
 		clickCheckInButton();
     }
