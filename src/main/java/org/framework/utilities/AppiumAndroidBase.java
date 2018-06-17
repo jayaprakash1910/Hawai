@@ -16,6 +16,7 @@ public class AppiumAndroidBase extends Base {
 	
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createRealChromeAppiumDriver() throws Throwable {
+		Log4j.info("Coming into real chrome ");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("browserName", browserName);
 		capabilities.setCapability("automationName", "Appium");
@@ -41,6 +42,7 @@ public class AppiumAndroidBase extends Base {
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createVirtualNativeAppiumDriver(String userInputDeviceName) throws Throwable {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
+		Log4j.info("Coming into virtual native ");
 		capabilities.setCapability("automationName", "Appium");
 		capabilities.setCapability("platformName", deviceType);
 		capabilities.setCapability("deviceName", userInputDeviceName);
@@ -65,6 +67,7 @@ public class AppiumAndroidBase extends Base {
 	
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createRealNativeAppiumDriver() throws Throwable {
+		Log4j.info("Coming into real native ");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("automationName", "Appium");
 		capabilities.setCapability("platformName", deviceType);
