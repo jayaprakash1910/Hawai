@@ -27,7 +27,7 @@ public class DeviceDetails extends Base {
 			osVersion = System.getProperty("os.version");
 			return osVersion;
 		} else if (deviceType.equalsIgnoreCase("Android")) {
-			osVersion = PhysicalDeviceDetails.getAndroidDeviceOSVersion();
+		//	osVersion = PhysicalDeviceDetails.getAndroidDeviceOSVersion();
 		} else if (deviceType.equalsIgnoreCase("iOS")) { 
 			osVersion = iOSPlatformVersion;
 		}

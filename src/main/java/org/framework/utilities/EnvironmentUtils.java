@@ -76,8 +76,6 @@ public class EnvironmentUtils extends Base {
 		return PropertiesHelper.readProperties("virtualdevice").equalsIgnoreCase("yes");
 	}
 	
-	public static String getPageLocatorPath() throws Throwable {
-		return System.getProperty("user.dir")+ File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator + "comcast" + File.separator + "MobileWiFi" +  File.separator + "pageLocator" + File.separator ;
-	}
+
 
 }

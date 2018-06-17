@@ -88,19 +88,6 @@ public class BrowserUtils extends Base {
 		}
 	}
 
-	public static String getRandomURL() throws Throwable {
-		String url = null;
-		try {
-			url = StringUtils.getRandomPublicURL();
-		//	logHelper.info("Public URL launched is: '" + url + "'");
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log4j.info(e.getMessage());
-		}
-
-		return url;
-	}
-
 	public static String getCurrentURL() throws Throwable {
 		String currentURL = null;
 		try {
@@ -142,7 +129,7 @@ public class BrowserUtils extends Base {
 	}
 	
 	public static void openBrowser() throws Throwable {
-		driver.get(getRandomURL());
+		driver.get("");
 	}
 
 	public static String getPageSourceContent() throws Throwable {
@@ -253,7 +240,7 @@ public class BrowserUtils extends Base {
 			driver.get(appURL);
 			Thread.sleep(500);
 		} else {
-			driver.get(BrowserUtils.getRandomURL());
+			driver.get("");
 			System.out.println("Driver name is - " + driver.getSessionId());
 			if (!(BrowserUtils.getURLStatus(BrowserUtils.getCurrentURL()) == 200)) {
 				System.out.println("Browser title - " + driver.getTitle());
@@ -268,7 +255,7 @@ public class BrowserUtils extends Base {
 		if (!appURL.isEmpty()) {
 			driver.get(appURL);
 		} else {
-		driver.get(BrowserUtils.getRandomURL());
+		driver.get("");
 		}
 		
 		takeScreenshots();

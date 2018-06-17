@@ -70,9 +70,7 @@ public class Base {
 	public static String tempTestcaseImagesPath = System.getProperty("user.dir") + File.separator ;
 	public static String screenshotPath = System.getProperty("user.dir") + File.separator + "Results" + File.separator;
 	
-	public static String deleteFolderFilePath = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "DeleteFolder.bat";
+	public static String deleteFolderFilePath = System.getProperty("user.dir") + File.separator + "DeleteFolder.bat";
 	public static String executeType = null;
 	public static String deviceType = EnvironmentUtils.getExecutionDeviceType();
 	public static String browserName = BrowserUtils.getBrowserName();
@@ -81,17 +79,6 @@ public class Base {
 	public static String deviceConnectHost = EnvironmentUtils.getRemoteIp();
 	public static String testCaseName;
 	public static String serviceUrl = "http://" + deviceConnectHost + ":4723/wd/hub";
-	public static String addRegistryFilePath = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "AddRegistry.bat";
-	public static String deleteRegistryFilePath = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "DeleteRegistry.bat";
-	
-	public static String aaaErrorCodesExcelPath = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "TestData.xlsx";
-	
 	public static XSSFSheet ExcelWSheet;
 	public static XSSFWorkbook ExcelWBook;
 	public static String pageLocatorsPath = System.getProperty("user.dir")+ File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "nativeapp" + File.separator + "pageLocator" + File.separator ;
@@ -100,14 +87,6 @@ public class Base {
 	public static String userId;
 	public static String killProcessBatFilePath = System.getProperty("user.dir") + File.separator + "KillTaskProcesses.bat";
 	public static String listProcessBatFilePath = System.getProperty("user.dir") + File.separator + "ListTaskManagerProcesses.bat";
-	public static String adbUninstallSettingsBat = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "adbUninstallSettings.bat";
-	
-	public static String adbUninstallUnlockBat = System.getProperty("user.dir") + File.separator + "src"
-			+ File.separator + "main" + File.separator + "java" + File.separator + "org" + File.separator
-			+ "comcast" + File.separator + "MobileWiFi" + File.separator + "testData" + File.separator + "adbUninstallUnlock.bat";
-	
 	public static String startDesktopJenkinsBatFilePath = "C:" + File.separator + "Jenkins" + File.separator + "execute.bat" + File.separator;
 	public static String osName = DeviceDetails.getOSName();
 	public static String iOSPlatformVersion = "11.2";
@@ -180,7 +159,6 @@ public class Base {
 	public static void addSystemInfoToCaptivePortalExtentReportSummaryPage() {
 		extent
         .addSystemInfo("Environment", environmentName)
-        .addSystemInfo("System's OS Version", "tempOSVersion") 
         .addSystemInfo("Device Type", deviceType)
         .addSystemInfo("Device Name", deviceName);
 	}
