@@ -47,7 +47,7 @@ public class AppiumAndroidBase extends Base {
 		capabilities.setCapability("platformName", deviceType);
 		capabilities.setCapability("deviceName", userInputDeviceName);
 		capabilities.setCapability("udid", PhysicalDeviceDetails.getUdid(userInputDeviceName));
-		//capabilities.setCapability("app", androidAppPath);
+		capabilities.setCapability("app", androidAppPath);
 		capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
 		capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
 		capabilities.setCapability("avd",userInputDeviceName);
@@ -73,7 +73,7 @@ public class AppiumAndroidBase extends Base {
 		capabilities.setCapability("platformName", deviceType);
 		capabilities.setCapability("deviceName", PhysicalDeviceDetails.deviceName);
 		capabilities.setCapability("udid", PhysicalDeviceDetails.getUdid(PhysicalDeviceDetails.deviceName));
-		//capabilities.setCapability("app", androidAppPath);
+		capabilities.setCapability("app", androidAppPath);
 		capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
 		capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
 		capabilities.setCapability("newCommandTimeout", 60);
