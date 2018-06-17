@@ -16,7 +16,6 @@ public class AppiumAndroidBase extends Base {
 	
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createRealChromeAppiumDriver() throws Throwable {
-		Log4j.info("Coming into real chrome ");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("browserName", browserName);
 		capabilities.setCapability("automationName", "Appium");
@@ -42,14 +41,13 @@ public class AppiumAndroidBase extends Base {
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createVirtualNativeAppiumDriver(String userInputDeviceName) throws Throwable {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		Log4j.info("Coming into virtual native ");
 		capabilities.setCapability("automationName", "Appium");
 		capabilities.setCapability("platformName", deviceType);
 		capabilities.setCapability("deviceName", userInputDeviceName);
 		capabilities.setCapability("udid", PhysicalDeviceDetails.getUdid(userInputDeviceName));
-		capabilities.setCapability("app", androidAppPath);
-		//capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
-		//capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
+		//capabilities.setCapability("app", androidAppPath);
+		capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
+		capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
 		capabilities.setCapability("avd",userInputDeviceName);
 		capabilities.setCapability("newCommandTimeout", 60);
 		
@@ -67,15 +65,14 @@ public class AppiumAndroidBase extends Base {
 	
 	@SuppressWarnings("rawtypes")
 	public static RemoteWebDriver createRealNativeAppiumDriver() throws Throwable {
-		Log4j.info("Coming into real native ");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("automationName", "Appium");
 		capabilities.setCapability("platformName", deviceType);
 		capabilities.setCapability("deviceName", PhysicalDeviceDetails.deviceName);
 		capabilities.setCapability("udid", PhysicalDeviceDetails.getUdid(PhysicalDeviceDetails.deviceName));
-		capabilities.setCapability("app", androidAppPath);
-		//capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
-		//capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
+		//capabilities.setCapability("app", androidAppPath);
+		capabilities.setCapability("appPackage", PropertiesHelper.readProperties("androidAppPackage"));
+		capabilities.setCapability("appActivity", PropertiesHelper.readProperties("androidAppActivity"));
 		capabilities.setCapability("newCommandTimeout", 60);
 		
 		try {

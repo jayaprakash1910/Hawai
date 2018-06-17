@@ -637,7 +637,6 @@ public class FileUtilityHelper extends Base {
 	public static boolean deleteDirFromCMDPrompt(String directoryPath) throws Exception {
 		boolean result = false;
 		String osName = System.getProperty("os.name");
-		Log4j.info("directory path is " + directoryPath);
 		File file =  new File(directoryPath);
 		
 		
