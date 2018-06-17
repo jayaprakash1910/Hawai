@@ -4,7 +4,7 @@ Results/**
 target/**
 test-output/**
 *.class
-src/main/java/org/comcast/MobileWiFi/testData/config.properties
+*.config.properties
 *.DS_Store
 
 /target/

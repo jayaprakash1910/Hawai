@@ -27,7 +27,7 @@
         <scripts> 
         	<![CDATA[ $(document).ready(function() { 
         		$(".logo-content").hide(); 
-        		$(".logo-container").html("Comcast WiFi"); 
+        		$(".logo-container").html("Hawaiian"); 
         	}); ]]> 
         </scripts>
         

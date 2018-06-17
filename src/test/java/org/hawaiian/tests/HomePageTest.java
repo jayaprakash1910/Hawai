@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class HomePageTest extends HomePage {
 
-	//@Test(groups = { "Nexus" })
+	@Test(groups = { "Nexus" })
     public void verifyCheckinPageOnNexus() throws Throwable {
 		logHelper.info("Launching the Hawaiian native app in Nexus Phone");
 		hAssert.assertTrue(BasePage.isHawaiianNativeAppOpened(), "Home page did not open", "Home page opened successfully");
@@ -22,7 +22,7 @@ public class HomePageTest extends HomePage {
 	}
 	
 	
-	@Test(groups = { "iphone7sim" })
+	//@Test(groups = { "iphone7sim" })
     public void verifyCheckingiossimulator() throws Throwable {
 //		logHelper.info("Launching the Hawaiian native app in Pixel Phone");
 //		hAssert.assertTrue(BasePage.isHawaiianNativeAppOpened(), "Home page did not open", "Home page opened successfully");

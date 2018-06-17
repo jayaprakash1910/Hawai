@@ -194,59 +194,6 @@ public class FileUtilityHelper extends Base {
 		newFile.renameTo(oldFile);
 	}
 	
-	public static void summaryReportLinkFromDetailedReport() {
-		File latestResultsFolder = FileUtilityHelper.getLatestDirectory(System.getProperty("user.dir") + File.separator + "Results");
-		File latestDetailedReport = FileUtilityHelper.getHTMLFile(latestResultsFolder.toString());
-		File latestSummarReport = FileUtilityHelper.getHTMLFile(latestResultsFolder.toString() + File.separator + "SummaryResults");
-		String oldFileName = latestDetailedReport.toString();
-		String tmpFileName = "tmp_try.html";
-		BufferedReader br = null;
-		BufferedWriter bw = null;
-		String tempString1, tempString2;
-		String userDirPath = System.getProperty("user.dir");
-		userDirPath = userDirPath.replace("\\", "/");
-		tempString1 = "<TABLE border=0 cellSpacing=1 cellPadding=1 width='50%' style='float:right'><TR><TD align='right' height = '100' width='20%'><TD align='right' height = '100' width='20%'><img src='file:///" + userDirPath + "/Logos/comcast.png' height='70%' >";
-		tempString2 = "</table><center><a href = '" + latestSummarReport.toString() + "'><H2> <B> Summary Report </a></H2></center><TABLE border=0 cellSpacing=1 cellPadding=1 width='50%' style='float:right'><TABLE border=0 cellSpacing=1 cellPadding=1 width='50%' style='float:right'><TR><TD align='right' height = '100' width='20%'><TD align='right' height = '100' width='20%'><img src='file:///" +  userDirPath + "/Logos/comcast.png' height='70%' >";
-
-		try {
-			br = new BufferedReader(new FileReader(oldFileName));
-			bw = new BufferedWriter(new FileWriter(tmpFileName));
-
-			String line;
-			while ((line = br.readLine()) != null) {
-				if (line.contains(tempString1)) {
-					line = line.replace(tempString1, tempString2);
-					bw.write(line);
-				}
-			}
-		} catch (Exception e) {
-			Log.info(e.getMessage());
-			return;
-		} finally {
-			try {
-				if (br != null) {
-					br.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				Log.info(e.getMessage());
-			}
-			try {
-				if (bw != null) {
-					bw.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				Log.info(e.getMessage());
-			}
-		}
-
-		File oldFile = new File(oldFileName);
-		oldFile.delete();
-
-		File newFile = new File(tmpFileName);
-		newFile.renameTo(oldFile);
-	}
 
 	public static File getLatestFile(String path) {
 		File lastModifiedFile = null;
@@ -460,30 +407,6 @@ public class FileUtilityHelper extends Base {
 	}
     
 	@SuppressWarnings("rawtypes")
-	public static ArrayList<String> getClassesAndTestMethods() throws IOException, ClassNotFoundException {
-    	String[] testClasses = PackageUtils.findClassesInPackage("org.comcast.MobileWiFi", new ArrayList<String>(), new ArrayList<String>());
-    	ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    	ArrayList<String> classesWithMethods = new ArrayList<String>();
-    	
-    	try {
-	    	for (String eachClass : testClasses){
-		    	Class currentClass = cl.loadClass(eachClass);
-		    	Set<Method> allMethods = ClassHelper.getAvailableMethods(currentClass);
-		    	Iterator<Method> iMethods = allMethods.iterator();
-		    	while (iMethods.hasNext()){
-			    	Method eachMethod = iMethods.next();
-			    	Test test = eachMethod.getAnnotation(Test.class);
-			    	if (test != null){
-			    		classesWithMethods.add(eachMethod.getDeclaringClass().getSimpleName() + "::" + eachMethod.getName());
-			    	}
-		    	}
-	    	}
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		Log.info(e.getMessage());
-    	}
-    		return classesWithMethods;
-    }
 	
 	public File[] fileFinder(String dirName, String fileExtn) {
 		File dir = new File(dirName);
