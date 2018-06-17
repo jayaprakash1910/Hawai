@@ -70,7 +70,7 @@ public class Base {
 	public static String tempTestcaseImagesPath = System.getProperty("user.dir") + File.separator ;
 	public static String screenshotPath = System.getProperty("user.dir") + File.separator + "Results" + File.separator;
 	
-	public static String deleteFolderFilePath = "";
+	public static String deleteFolderFilePath = System.getProperty("user.dir") + File.separator + "DeleteFolder.bat";
 	public static String executeType = null;
 	public static String deviceType = EnvironmentUtils.getExecutionDeviceType();
 	public static String browserName = BrowserUtils.getBrowserName();
@@ -159,7 +159,6 @@ public class Base {
 	public static void addSystemInfoToCaptivePortalExtentReportSummaryPage() {
 		extent
         .addSystemInfo("Environment", environmentName)
-        .addSystemInfo("System's OS Version", "tempOSVersion") 
         .addSystemInfo("Device Type", deviceType)
         .addSystemInfo("Device Name", deviceName);
 	}

@@ -457,10 +457,6 @@ public class FileUtilityHelper extends Base {
 			}
 			String content = contentBuilder.toString();
 			
-			if (content.contains("<td>tempOSVersion</td>")) {
-				content = content.replace("<td>tempOSVersion</td>", "<td>" + osVersion + "</td>");
-			}
-			
 			bw.write(content);
 		} catch (Exception e) {
 			// Log.info(e.getMessage());
