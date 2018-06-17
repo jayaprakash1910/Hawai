@@ -8,9 +8,9 @@ public class EnvironmentUtils extends Base {
 	
 	public static boolean isNative() {
 		if (System.getProperty("native") != null) {
-			return System.getProperty("native").equalsIgnoreCase("yes");
+			return System.getProperty("native").toLowerCase().equalsIgnoreCase("yes");
 		}
-		return PropertiesHelper.readProperties("native").equalsIgnoreCase("yes");
+		return PropertiesHelper.readProperties("native").toLowerCase().equalsIgnoreCase("yes");
 	}
 	
 	public static String getExecutionDeviceType() {
@@ -71,9 +71,9 @@ public class EnvironmentUtils extends Base {
 	
 	public static boolean isVirtualDevice() {
 		if (System.getProperty("virtualdevice") != null) {
-			return System.getProperty("virtualdevice").equalsIgnoreCase("yes");
+			return System.getProperty("virtualdevice").toLowerCase().equalsIgnoreCase("yes");
 		} 
-		return PropertiesHelper.readProperties("virtualdevice").equalsIgnoreCase("yes");
+		return PropertiesHelper.readProperties("virtualdevice").toLowerCase().equalsIgnoreCase("yes");
 	}
 	
 
