@@ -16,18 +16,14 @@ public class SampleTest extends Base {
 	@Test(groups = { "SampleTest" })
     public void launchYahooMail() throws Throwable {
 		BrowserUtils.openBrowser("http://www.yahoo.com");
-//		logHelper.info("Yahoo Home page is launched");
-//		driver.findElementByCssSelector("#uh-signin").click();
-//		Thread.sleep(3000);
-//		logHelper.info("Yahoo email login page opened");
-//		
+		driver.findElementByCssSelector("#uh-signin").click();
+		Thread.sleep(3000);
     }
 	
-	//@Test(groups = { "SampleTest" })
+	@Test(groups = { "SampleTest" })
     public void verifyYahooLogo() throws Throwable {
 		BrowserUtils.openBrowser("http://www.yahoo.com");
 		assertTrue(driver.findElementByCssSelector("#uh-logo").isDisplayed());
-		logHelper.info("Yahoo Logo is visible");
     }
 
 }
