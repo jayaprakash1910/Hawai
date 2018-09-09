@@ -132,7 +132,7 @@ public class Base {
 	@AfterSuite (alwaysRun = true)
 	public void endReport() throws Throwable {
         extent.flush();
-        extent.close();
+       // extent.close();
       //  DriverUtils.stopEmulator();
         testReportClosureActivities();
     }
