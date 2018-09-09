@@ -101,8 +101,8 @@ public class Base {
 	@BeforeSuite (alwaysRun = true)
 	public static void startReport() throws Throwable {
 		initiateLog4jConfigurator();
-		FileUtilityHelper.deleteImageProcessingFolder();
-		FileUtilityHelper.deleteJenkinsReportFolder();
+		//FileUtilityHelper.deleteImageProcessingFolder();
+		//FileUtilityHelper.deleteJenkinsReportFolder();
 		generateInitialExtentReport();
 	}
 	
@@ -133,7 +133,7 @@ public class Base {
 	public void endReport() throws Throwable {
         extent.flush();
         extent.close();
-        DriverUtils.stopEmulator();
+      //  DriverUtils.stopEmulator();
         testReportClosureActivities();
     }
 
