@@ -16,6 +16,7 @@ import org.framework.reports.HardAssertion;
 import org.framework.reports.LoggerHelper;
 import org.framework.utilities.BrowserUtils;
 import org.framework.utilities.DeviceDetails;
+import org.framework.utilities.DriverUtils;
 import org.framework.utilities.EnvironmentUtils;
 import org.framework.utilities.FileUtilityHelper;
 import org.framework.utilities.ScreenshotUtils;
@@ -132,6 +133,7 @@ public class Base {
 	public void endReport() throws Throwable {
         extent.flush();
         extent.close();
+        DriverUtils.stopEmulator();
         testReportClosureActivities();
     }
 
@@ -192,33 +194,6 @@ public class Base {
 		Thread.sleep(1000);
 	}
 	
-	@SuppressWarnings("unused")
-	public static String getLatestInterfacesFileName() throws Exception {
-		File interfacesPath = new File("C:" + File.separator + "ProgramData" + File.separator + "Microsoft" + File.separator + "Wlansvc" + File.separator + "Profiles" + File.separator + "Interfaces" + File.separator);
-		String[] names = interfacesPath.list();
-		String file = null;
-		
-		for(String name : names) {
-			String tempLastModifiedFolder = FileUtilityHelper.getLatestFile(interfacesPath.toString()).toString();
-			file = tempLastModifiedFolder;
-		}
-		
-		return file;
-	}
-
-	public static void purgeOldFiles() {
-		FileUtilityHelper.deleteFilesOlderThan30Days();
-	}
-	
-	public static void resetTCResultCounter() {
-		successCounter = 0; 
-		failureCounter = 0;
-	}
-	
-	public static boolean getTestCaseFinalStatus() {
-  		return failureCounter == 0;
-  	}
-	
 	public static double getPassPercent() {
 		double passPercent = (passCounter/(passCounter + failCounter) * 100);
 		return (double) Math.round(passPercent * 100) / 100;
@@ -228,5 +203,4 @@ public class Base {
 		double passPercent = (failCounter/(passCounter + failCounter) * 100);
 		return (double) Math.round(passPercent * 100) / 100;
 	}
-	
 }

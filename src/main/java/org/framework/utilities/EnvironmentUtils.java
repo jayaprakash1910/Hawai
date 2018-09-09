@@ -1,11 +1,12 @@
 package org.framework.utilities;
 
-import java.io.File;
-
 import org.framework.Base;
 
 public class EnvironmentUtils extends Base {
 	
+	private static String androidPageLocatorsPath;
+	private static String iOSPageLocatorsPath;
+
 	public static boolean isNative() {
 		if (System.getProperty("native") != null) {
 			return System.getProperty("native").toLowerCase().equalsIgnoreCase("yes");
@@ -76,6 +77,17 @@ public class EnvironmentUtils extends Base {
 		return PropertiesHelper.readProperties("virtualdevice").toLowerCase().equalsIgnoreCase("yes");
 	}
 	
-
+	public static String getActivePageLocatorPath() {
+		if (System.getProperty("deviceType") != null && System.getProperty("deviceType").toLowerCase().equalsIgnoreCase("android")) {
+			return androidPageLocatorsPath;
+		} else if ((System.getProperty("deviceType") != null) && System.getProperty("deviceType").toLowerCase().equalsIgnoreCase("ios")) {
+			return iOSPageLocatorsPath;
+		} else if (PropertiesHelper.readProperties("deviceType").toLowerCase().equalsIgnoreCase("android")) {
+			return androidPageLocatorsPath;
+		} else if (PropertiesHelper.readProperties("deviceType").toLowerCase().equalsIgnoreCase("ios")) {
+			return iOSPageLocatorsPath;
+		}
+		return "";
+	}
 
 }

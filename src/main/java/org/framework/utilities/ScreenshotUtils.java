@@ -23,28 +23,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 public class ScreenshotUtils extends Base {
-	//protected static AppiumDriver<MobileElement> driver;	
-	/****************************************************************************************************************************
-	 * Function Name : get_ScreenShot() Description : Capture Screenshot
-	 * 
-	 * @param fileName: FileName screenshot save in local directory
-	 ****************************************************************************************************************************/
-	public static String get_ScreenShot(String fileName) {
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String source = scrFile.getAbsolutePath().substring(scrFile.getAbsolutePath().lastIndexOf(File.separator) + 1).toString();
-		String screenshotDestinationPath = null;
-		
-		try {
-				FileUtils.moveToDirectory(scrFile, new File(fileName), false);
-				File newFile = new File( fileName + File.separator + source);
-				screenshotDestinationPath = fileName + File.separator + Base.currentTestMethodName + "_" + CalendarUtils.getLocalDateTime().replace(" ", "_").replace(":", "_").replace("/", "_") + ".png";
-				new File(newFile.toString()).renameTo((new File(screenshotDestinationPath)));
-		} catch (IOException e) {
-			e.printStackTrace();
-			logHelper.info(e.getMessage());
-		}
-		return screenshotDestinationPath;
-	}
 	
 	public static String getScreenshot() throws Exception {
 		String dateName = CalendarUtils.getCurrentTime().replace(" ", "_").replace(":", "_").replace("/", "_");
@@ -170,24 +148,4 @@ public class ScreenshotUtils extends Base {
 		}
 	}
 	
-	public static void getDesktopScreenshot(String fileName) throws Exception {
-		try {
-			Robot robot = new Robot();
-		    Rectangle screenRect  = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-		    BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-		    ImageIO.write(screenFullImage , "png", new File(fileName));
-		    
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-//	public static void captureFirstDesktopScreenshot() throws Exception {
-//		 if (deviceType.equalsIgnoreCase("Desktop")) {
-//	        	File latestResultsFolder = FileUtilityHelper.getLatestDirectory(System.getProperty("user.dir") + File.separator + "Results" + File.separator);
-//	            String latestResultsFolderPath = latestResultsFolder.toString();
-//	            
-//	            ScreenshotUtilsHelper.getDesktopScreenshot(latestResultsFolderPath + File.separator + "DesktopScreenshot.png");
-//	     }
-//	}
 }

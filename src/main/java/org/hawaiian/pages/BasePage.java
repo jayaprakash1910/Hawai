@@ -6,6 +6,7 @@ import org.framework.utilities.DriverUtils;
 public class BasePage extends Base {
 	
 	public static boolean isHawaiianNativeAppOpened() throws Throwable {
+		DriverUtils.startEmulator();
 		DriverUtils.instantiateDriver();
 		Thread.sleep(2000);
 		takeScreenshots();

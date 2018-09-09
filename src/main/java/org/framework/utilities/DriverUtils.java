@@ -37,4 +37,20 @@ public class DriverUtils extends Base {
 		AppiumDriverLocalService service = AppiumDriverLocalService.buildDefaultService();
 		service.stop();
 	}
+	
+	public static void startEmulator() {
+		if (System.getProperty("deviceType") != null) {
+			if (EnvironmentUtils.isVirtualDevice() && System.getProperty("deviceType").equalsIgnoreCase("android")) {
+				//AndroidAppiumBase.startEmulatorBatchFile(); //correct this name - call the method
+			}
+		} else if (EnvironmentUtils.isVirtualDevice() && PropertiesHelper.readProperties("deviceType").equalsIgnoreCase("android")) {
+			//AndroidAppiumBase.startEmulatorBatchFile(); //correct this name - call the method
+		}
+	}
+	
+	public static void stopEmulator() {
+		if (System.getProperty("deviceType").equalsIgnoreCase("Android") && EnvironmentUtils.isVirtualDevice()) {
+			//call your emulator stopping method using batch command that you have written
+		}
+	}
 }

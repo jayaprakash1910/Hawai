@@ -44,16 +44,6 @@ public class ScrollUtils extends Base {
 		return false;
 	}
 	
-	public static boolean isElementVisibleOnScreen(WebElement element) {
-		try {
-			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-			return element.isDisplayed();
-		} catch (Exception e) {
-			Log4j.info(e.getMessage());
-		}
-		return false;
-	}
-
 	public static void scrollToElement(WebElement element) {
 		//((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 		try {

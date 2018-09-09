@@ -61,15 +61,6 @@ public class SetForgroundWindowUtils {
 	      
 	   }
 	   
-	   public static void alt_tab() throws Exception {
-			Robot robot = new Robot();
-			robot.keyPress(KeyEvent.VK_ALT);
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_ALT);
-			robot.delay(2000);
-		}
-		
 		public static void enterOptions() throws Exception {
 			Robot robot = new Robot();
 			robot.keyPress(KeyEvent.VK_Q);

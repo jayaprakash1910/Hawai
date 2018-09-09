@@ -7,19 +7,12 @@ import org.openxmlformats.schemas.drawingml.x2006.main.CTNonVisualDrawingProps;
 import org.openxmlformats.schemas.drawingml.x2006.main.CTPositiveSize2D;
 import org.openxmlformats.schemas.drawingml.x2006.wordprocessingDrawing.CTInline;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class CustomXWPFDocument extends XWPFDocument {
 	
 	 public CustomXWPFDocument() {
 	     super();
 	  }
 	 
-    public CustomXWPFDocument(InputStream in) throws IOException {
-        super(in);
-    }
-
     public void createPicture(String blipId,int id, int width, int height) {
         final int EMU = 9525;
         width *= EMU;
