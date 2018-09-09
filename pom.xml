@@ -144,7 +144,7 @@
 	 			 <configuration>
 					<skip>false</skip>
 					<parallel>methods</parallel>
-					<threadCount>${threads}</threadCount>
+					<!-- <threadCount>${threads}</threadCount> -->
 					<includes> 
 						<include>**/*Test.java</include>
 					</includes> 
