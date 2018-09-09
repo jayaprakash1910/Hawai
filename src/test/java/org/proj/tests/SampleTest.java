@@ -16,7 +16,7 @@ public class SampleTest extends Base {
 	@Test(groups = { "SampleTest" })
     public void launchYahooMail() throws Throwable {
 		System.out.println("First Line");
-		BrowserUtils.openBrowser("http://www.yahoo.com");
+		//BrowserUtils.openBrowser("http://www.yahoo.com");
 //		driver.findElementByCssSelector("#uh-signin").click();
 //		Thread.sleep(3000);
 		System.out.println("First Line");
@@ -25,7 +25,7 @@ public class SampleTest extends Base {
 	@Test(groups = { "SampleTest" })
     public void verifyYahooLogo() throws Throwable {
 		System.out.println("First Line");
-		BrowserUtils.openBrowser("http://www.yahoo.com");
+		//BrowserUtils.openBrowser("http://www.yahoo.com");
 		//assertTrue(driver.findElementByCssSelector("#uh-logo").isDisplayed());
 		System.out.println("First Line");
 	}
